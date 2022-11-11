@@ -13,6 +13,8 @@ Link for CodeLabs Document : https://codelabs-preview.appspot.com/?file_id=1Nlyw
 
 5. Hosted the application in digital ocean as a deamon service
 
+6. Implemented Great Expectations to Analyze the datasets to check for similarities and outliers
+
 Steps to use app in your environment:
 
 Step1: Clone the repo in your local
