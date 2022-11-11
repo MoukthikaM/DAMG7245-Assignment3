@@ -1,0 +1,3 @@
+#!/bin/bash
+export DETA_PROJECT_KEY="b0sokbvu_LHs85pSKRsz9pd2NKPT9STuozjsvwHp9"
+export APP_SECRET_STRING="8f728f7c7d4b894b702d10f2839bb92f296daf20b67278193b347004ec8de72a"

@@ -9,4 +9,4 @@ RUN pip install -r requirements.txt -f https://download.pytorch.org/whl/torch_st
 COPY . /fastapi
 EXPOSE 8000
 
-CMD ["uvicorn", "predictfromimage:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
