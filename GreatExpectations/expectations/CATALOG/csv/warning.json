@@ -1,0 +1,21 @@
+{
+  "data_asset_type": null,
+  "expectation_suite_name": "CATALOG.csv.warning",
+  "expectations": [],
+  "ge_cloud_id": null,
+  "meta": {
+    "citations": [
+      {
+        "batch_request": {
+          "data_asset_name": "CATALOG.csv",
+          "data_connector_name": "default_inferred_data_connector_name",
+          "datasource_name": "datasevir",
+          "limit": 1000
+        },
+        "citation_date": "2022-11-10T07:02:47.445398Z",
+        "comment": "Created suite added via CLI"
+      }
+    ],
+    "great_expectations_version": "0.15.29"
+  }
+}
