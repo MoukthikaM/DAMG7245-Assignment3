@@ -1,6 +1,6 @@
 # DAMG7245-Assignment2
 
-Link for CodeLabs Document : https://codelabs-preview.appspot.com/?file_id=17_WT8tTp7symFti61hM6WcPqia5hbvfSWCMSnil53M8#3 
+Link for CodeLabs Document : https://codelabs-preview.appspot.com/?file_id=1NlywJ0AF_PW3Dc3j-nNonKtnufVJko9dZytWm4Y0qPs#2
 
 
 1. Implemented Data as a Service for the SEVIR Datasets using FASTAPI and Postman.
