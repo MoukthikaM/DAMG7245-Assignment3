@@ -154,7 +154,7 @@ def eventcount(event_name,credentials: HTTPAuthorizationCredentials = Security(s
     token = credentials.credentials
     df_VIS = pd.read_csv('datasets/sevir/VIS_stats_master.csv', low_memory=False)
     if(auth_handler.decode_token(token)):
-        if event_name not in df_VIS['event']:
+        if event_name not in df_VIS['event'].values:
             raise HTTPException(status_code=400, detail="EVENT NOT FOUND, PLEASE ENTER THE CORRECT EVENT")
         eventcount=number_of_events(event_name)
         return {'Event count': eventcount }
