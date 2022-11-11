@@ -1,7 +1,7 @@
 import streamlit as st
 import requests
-
-
+import pandas as pd
+import json
 st.title("Data As a Service")
 
 
@@ -14,7 +14,8 @@ def postreq(path,params):
         }
 
         response = requests.request("GET", url, headers=headers, data=payload)
-
+        # print(response.text)
+        # print("here")
         return response.text
 
 def data_clicked():
@@ -54,13 +55,25 @@ def data_clicked():
             params=EventType+"/"+Lat+"/"+Long
             if st.button('result',key = 'five'):
                 result=postreq("location/",params)
+                print(type(result))
                 st.json(result)
+
+logOutSection=st.container()
+def LoggedOut_Clicked():
+    st.session_state['loggedIn'] = False
+    st.session_state['auth_code'] = ""
+    st.session_state['user'] = ""
+    
+def show_logout_page():
+    with logOutSection:
+        st.button ("Log Out", key="logout", on_click=LoggedOut_Clicked)
 
 if 'auth_code' not in st.session_state:
     st.write("Please Login")
 
 elif st.session_state["auth_code"]:
-     data_clicked() 
+     data_clicked()
+     show_logout_page() 
 else:
      st.write("Please Login")
 

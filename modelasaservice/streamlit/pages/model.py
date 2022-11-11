@@ -1,7 +1,7 @@
 import streamlit as st
 import json
 import requests
-# import login
+
 
 st.title("Model As a Service")
 
@@ -27,13 +27,13 @@ def model_clicked():
         input_vil = st.file_uploader("insert vil")  # image upload widget
         input_ir069 = st.file_uploader("insert ir069")  # image upload widget
         input_ir107 = st.file_uploader("insert ir107")  # image upload widget
-        if st.button("Flashes",key="flashes"):
+        if st.button("Flashes ⛈️",key="flashes"):
              
             col1, col2 = st.columns(2)
 
             if input_vis and input_vil and input_ir069 and input_ir107:
              print("All images uploaded")
-             print("xx")
+             
              st.balloons()
              segments = process(input_vis,input_ir069,input_vil,input_ir107,backend)
              flashes=segments.json()
@@ -42,15 +42,25 @@ def model_clicked():
              col1.write(flashes['flashes'])
             else:
         # handle case with no image
-             st.write("Insert all images please!")
+             st.error("Insert all images please!")
+logOutSection=st.container()
+def LoggedOut_Clicked():
+    st.session_state['loggedIn'] = False
+    st.session_state['auth_code'] = ""
+    st.session_state['user'] = ""
+    
+def show_logout_page():
+    with logOutSection:
+        st.button ("Log Out", key="logout", on_click=LoggedOut_Clicked)
+
 
 if 'auth_code' not in st.session_state:
     st.write("Please Login")
 
 elif st.session_state["auth_code"]:
      model_clicked()
+     show_logout_page()
 else:
      st.write("Please Login")
-
 
 

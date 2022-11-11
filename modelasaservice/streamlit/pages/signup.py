@@ -16,23 +16,28 @@ def signup_user(username,password):
 }
 
         response = requests.request("POST", url, headers=headers, data=payload)
-        print(response.text)
+        # print(response.text)
         dict=json.loads(response.text)
+        print(dict)
         if 'key' not in dict:
-                return False
+                return False,dict
         else :
-                return True
+                return True,dict
 
 
 username = st.text_input("User Name")
 password = st.text_input("Password",type='password')
 
-if st.button('SignUp'):        
-        result=signup_user(username,password)
-        print(result)
+if st.button('SignUp'):    
+    if username and password:        
+        result,dict=signup_user(username,password)
+        # print(result)
         if result:
             st.success("You have successfully created an account.Go to the Login Menu to login")
+        elif dict=='invalid username': 
+            st.error("Enter Valid Email")
         else: 
             st.error("Signup Failed username already present")
- 
+    else:
+         st.error("Please Fill the Details")   
         

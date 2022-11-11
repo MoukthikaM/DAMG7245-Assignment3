@@ -2,7 +2,7 @@ import streamlit as st
 import json
 import requests
 st.set_page_config(
-      page_title="Multipage App",
+      page_title="SEVIR App",
       page_icon="👋",
 )
 
@@ -28,8 +28,8 @@ def loginuser(username,password):
         print(username)
         response = requests.request("POST", url, headers=headers, data=payload)
         dict=json.loads(response.text)
-        print(dict)
-        print(response.text)
+        # print(dict)
+        # print(response.text)
         if 'status_code' not in response.text: 
              st.session_state['auth_code']=dict['token']
              return response.text
@@ -54,13 +54,13 @@ def refreshtoken():
 
         response = requests.request("GET", url, headers=headers, data=payload)
         dict=json.loads(response.text)
-        print(response.text)
+        # print(response.text)
         return dict['token']
 
 
 def show_main_page():
     with mainSection:
-      st.title("Welcome {} 🙏".format(st.session_state['user']))
+      st.title("Welcome {} 🌟".format(st.session_state['user']))
       print(st.session_state['user'])
       st.sidebar.success("Select a page above.")
 #       st.write("Welcome user",st.session_state['user'])
@@ -95,7 +95,8 @@ def show_login_page():
         if st.session_state['loggedIn'] == False:
             userName = st.text_input (label="username", key='ulogin',placeholder="Enter your user name")
             passWord = st.text_input (label="password", key='login',placeholder="Enter password", type="password")
-            st.button ("Login", on_click=LoggedIn_Clicked, args= (userName, passWord))
+            if userName and passWord:
+                st.button ("Login", on_click=LoggedIn_Clicked, args= (userName, passWord))
 
 
 

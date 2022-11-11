@@ -1,0 +1,6 @@
+VIL_stats_master.csv filter=lfs diff=lfs merge=lfs -text
+VIS_stats_master.csv filter=lfs diff=lfs merge=lfs -text
+WV_stats_master.csv filter=lfs diff=lfs merge=lfs -text
+CATALOG.csv filter=lfs diff=lfs merge=lfs -text
+IR_stats_master.csv filter=lfs diff=lfs merge=lfs -text
+LI_stats_master.csv filter=lfs diff=lfs merge=lfs -text

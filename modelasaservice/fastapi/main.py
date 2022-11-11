@@ -45,17 +45,25 @@ def predictflash(X_test):
       flashes=model.predict(X_test)
       print(flashes[0])
       return flashes[0]
-
-
+import re
+regex = r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
+def checkemail(email):
+    if(re.fullmatch(regex, email)):
+        return True
+    else:
+        return False
 @app.post("/signup")
 def signup(user_details: AuthModel):
     if users_db.get(user_details.username) != None:
         return 'Account already exists'
     try:
+      if checkemail(user_details.username):
         hashed_password = auth_handler.encode_password(user_details.password)
-        print("jj")
+        # print("jj")
         user = {'key': user_details.username, 'password': hashed_password}
         return users_db.put(user)
+      else:
+        return "invalid username"
     except:
         error_msg = 'Failed to signup user'
         return error_msg
@@ -63,19 +71,19 @@ def signup(user_details: AuthModel):
 @app.post("/login")
 def login(user_details: AuthModel):
     print("login")
-    print(user_details)
-    print("test")
+    # print(user_details)
+    # print("test")
     
     user = users_db.get(user_details.username)
     
-    print(user)
+    # print(user)
     if (user is None):
         return HTTPException(status_code=401, detail='Invalid username')
     if (not auth_handler.verify_password(user_details.password, user['password'])):
         return HTTPException(status_code=401, detail='Invalid password')
     
     token = auth_handler.encode_token(user['key'])
-    print(token)
+    # print(token)
     return {'token': token}
 
 @app.get('/refresh_token')
@@ -144,9 +152,12 @@ def number_of_events(event_name):
 @app.get("/eventcount/{event_name}")
 def eventcount(event_name,credentials: HTTPAuthorizationCredentials = Security(security)):
     token = credentials.credentials
+    df_VIS = pd.read_csv('datasets/sevir/VIS_stats_master.csv', low_memory=False)
     if(auth_handler.decode_token(token)):
-         eventcount=number_of_events(event_name)
-         return {'Event count': eventcount }
+        if event_name not in df_VIS['event']:
+            raise HTTPException(status_code=400, detail="EVENT NOT FOUND, PLEASE ENTER THE CORRECT EVENT")
+        eventcount=number_of_events(event_name)
+        return {'Event count': eventcount }
 
 
 def get_description(column):
@@ -157,7 +168,10 @@ def get_description(column):
 @app.get("/desc/{column}")
 def desc(column,credentials: HTTPAuthorizationCredentials = Security(security)):
     token = credentials.credentials
+    df_VIS = pd.read_csv('datasets/sevir/VIS_stats_master.csv', low_memory=False)
     if(auth_handler.decode_token(token)):
+        if column not in list(df_VIS.columns):
+            raise HTTPException(status_code=400, detail="COLUMN NOT FOUND, PLEASE ENTER THE CORRECT COLUMN NAME")
         col_desc = get_description(column)
         return col_desc
 
@@ -202,8 +216,9 @@ def getlocation(event_type,x,y,credentials: HTTPAuthorizationCredentials = Secur
   df_event_type = filter1[filter1.columns[cols]]
   df3 = df_event_type[(df_event_type['llcrnrlat'] < x) & (df_event_type['llcrnrlon'] < y) & (df_event_type['urcrnrlat'] > x) & (df_event_type['urcrnrlon'] > y)]
   if  df3.empty:
-        return print('No Records , No data in accordance to the input in the dataframe')
+        raise HTTPException(status_code=400, detail="LOCATION NOT FOUND, PLEASE ENTER THE CORRECT COORDINATES AND EVENT TYPE")
   else :
         result = df3.to_json(orient="records")
         p = json.loads(result)
+        
         return p
