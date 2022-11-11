@@ -14,8 +14,12 @@ Link for CodeLabs Document : https://codelabs-preview.appspot.com/?file_id=1Nlyw
 5. Hosted the application in digital ocean as a deamon service
 
 ##Steps to use app in your environment:
+
 ###Step1: Clone the repo in your local
+
 ###Step2: Navigate to docker compose file folder
+
 ###Step3: docker compose build
+
 ###Step4: docker compose up
 
